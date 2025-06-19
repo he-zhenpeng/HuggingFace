@@ -116,6 +116,10 @@ RUN git clone --depth=1 -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} && \
 COPY docker-entrypoint.sh ${QL_DIR}/docker
 COPY front.conf ${QL_DIR}/docker/front.conf
 
+RUN apt-get update && apt-get install -y --no-install-recommends dos2unix && \
+    dos2unix ${QL_DIR}/docker/docker-entrypoint.sh && \
+    chmod +x ${QL_DIR}/docker/docker-entrypoint.sh
+
 RUN mkdir /ql/data && \
   mkdir /ql/data/config && \
   mkdir /ql/data/log && \
