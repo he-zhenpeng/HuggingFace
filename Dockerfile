@@ -79,6 +79,9 @@ RUN set -x && \
   rclone \
   unzip \
   libatomic1 && \
+  curl -Of https://rclone.org/install.sh && \
+  bash install.sh && \
+  rm -f install.sh && \
   apt-get clean && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
   echo "Asia/Shanghai" >/etc/timezone && \
