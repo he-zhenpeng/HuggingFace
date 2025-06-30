@@ -5,7 +5,11 @@ ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=debian
+
+FROM rclone/rclone:latest AS rclone
+ARG RCLONE_CONF=$RCLONE_CONF
 ARG RCLONE_FOLDER=$RCLONE_FOLDER
+COPY --from=rclone /usr/local/bin/rclone /usr/bin/rclone
 
 ENV QL_DIR=/ql \
   QL_BRANCH=${QL_BRANCH}
@@ -77,7 +81,6 @@ RUN set -x && \
   procps \
   netcat \
   sshpass \
-  rclone \
   unzip \
   libatomic1 && \
   apt-get clean && \
