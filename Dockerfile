@@ -1,12 +1,12 @@
 FROM node:20-slim as nodebuilder
-
+FROM rclone/rclone:latest as rclone
 FROM python:3.11-slim-bullseye as builder
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=debian
 
-FROM rclone/rclone:latest AS rclone
+
 ARG RCLONE_CONF=$RCLONE_CONF
 ARG RCLONE_FOLDER=$RCLONE_FOLDER
 COPY --from=rclone /usr/local/bin/rclone /usr/bin/rclone
