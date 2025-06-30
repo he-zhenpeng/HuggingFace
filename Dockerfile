@@ -76,7 +76,6 @@ RUN set -x && \
   procps \
   netcat \
   sshpass \
-  rclone \
   unzip \
   libatomic1 && \
   curl -Of https://rclone.org/install.sh && \
