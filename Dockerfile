@@ -1,21 +1,21 @@
-FROM node:20-slim as nodebuilder
+FROM node:22-slim as nodebuilder
 FROM rclone/rclone:latest as rclone
-FROM python:3.11-slim-bullseye as builder
+FROM python:3.13-slim-bullseye as builder
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=debian
 
-
 ARG RCLONE_CONF=$RCLONE_CONF
 ARG RCLONE_FOLDER=$RCLONE_FOLDER
-COPY --from=rclone /usr/local/bin/rclone /usr/bin/rclone
+
 
 ENV QL_DIR=/ql \
   QL_BRANCH=${QL_BRANCH}
 
 COPY --from=nodebuilder /usr/local/bin/node /usr/local/bin/
 COPY --from=nodebuilder /usr/local/lib/node_modules/. /usr/local/lib/node_modules/
+COPY --from=rclone /usr/local/bin/rclone /usr/bin/rclone
 RUN set -x && \
   ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
   apt-get update && \
