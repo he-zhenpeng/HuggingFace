@@ -5,6 +5,7 @@ ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=debian
+ARG RCLONE_FOLDER=$RCLONE_FOLDER
 
 ENV QL_DIR=/ql \
   QL_BRANCH=${QL_BRANCH}
