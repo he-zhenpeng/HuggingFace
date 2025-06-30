@@ -1,21 +1,16 @@
-FROM node:22-slim as nodebuilder
-FROM rclone/rclone:latest as rclone
-FROM python:3.13-slim-bullseye as builder
+FROM node:20-slim as nodebuilder
+
+FROM python:3.11-slim-bullseye as builder
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=debian
-
-ARG RCLONE_CONF=$RCLONE_CONF
-ARG RCLONE_FOLDER=$RCLONE_FOLDER
-
 
 ENV QL_DIR=/ql \
   QL_BRANCH=${QL_BRANCH}
 
 COPY --from=nodebuilder /usr/local/bin/node /usr/local/bin/
 COPY --from=nodebuilder /usr/local/lib/node_modules/. /usr/local/lib/node_modules/
-COPY --from=rclone /usr/local/bin/rclone /usr/bin/rclone
 RUN set -x && \
   ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
   apt-get update && \
@@ -81,6 +76,7 @@ RUN set -x && \
   procps \
   netcat \
   sshpass \
+  rclone \
   unzip \
   libatomic1 && \
   apt-get clean && \
@@ -119,10 +115,6 @@ RUN git clone --depth=1 -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} && \
 
 COPY docker-entrypoint.sh ${QL_DIR}/docker
 COPY front.conf ${QL_DIR}/docker/front.conf
-
-RUN apt-get update && apt-get install -y --no-install-recommends dos2unix && \
-    dos2unix ${QL_DIR}/docker/docker-entrypoint.sh && \
-    chmod +x ${QL_DIR}/docker/docker-entrypoint.sh
 
 RUN mkdir /ql/data && \
   mkdir /ql/data/config && \
@@ -172,16 +164,11 @@ USER coder
 
 ENV HOME=/home/coder \
 	PATH=/home/coder/.local/bin:$PATH
- 
-WORKDIR /home/coder
-
-# 创建rclone配置文件
-RUN rclone config -h
-
 
 WORKDIR ${QL_DIR}
 
-
+# 创建rclone配置文件
+RUN rclone config -h
 
 HEALTHCHECK --interval=5s --timeout=2s --retries=20 \
   CMD curl -sf --noproxy '*' http://127.0.0.1:5400/api/health || exit 1
