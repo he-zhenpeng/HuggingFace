@@ -178,8 +178,8 @@ WORKDIR ${QL_DIR}
 # 创建rclone配置文件
 RUN rclone config -h
 
-HEALTHCHECK --interval=5s --timeout=2s --retries=20 \
-  CMD curl -sf --noproxy '*' http://127.0.0.1:5400/api/health || exit 1
+# HEALTHCHECK --interval=5s --timeout=2s --retries=20 \
+#   CMD curl -sf --noproxy '*' http://127.0.0.1:5400/api/health || exit 1
 
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]
 
