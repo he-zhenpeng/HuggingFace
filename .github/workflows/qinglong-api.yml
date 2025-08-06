@@ -14,7 +14,7 @@ on:
       Admin:
         description: '青龙管理用户名'
         required: false
-        default: ''
+        default: 'admin'
       Password:
         description: '青龙管理密码'
         required: false
@@ -22,7 +22,7 @@ on:
       Image:
         description: '青龙docker镜像地址'
         required: false
-        default: ''
+        default: 'skylerhe/qinglong:latest'
       Rclone_folder:
         description: 'Rclone远程文件夹'
         required: false
