@@ -9,11 +9,14 @@ app_port: 5700
 ---
 
 
-
+```
+docker run -d --name qinglong --net host -e ADMIN_USERNAME=admin -e ADMIN_PASSWORD=D1543608 -e RCLONE_CONF=6 -e RCLONE_FOLDER=onedrive:/qinglong skylerhe/qinglong
+```
 Space secrets(Private)说明:   
 ADMIN_USERNAME:登陆用户名   
 ADMIN_PASSWORD:登陆密码   
-RCLONE_CONF:rclone配置内容，可选   
+RCLONE_CONF:rclone配置内容，可选  
+RCLONE_FOLDER
 NOTIFY_CONFIG:通知配置内容，可选，需要到通知设置里抓包
 
 ## 20250308更新   
@@ -37,5 +40,6 @@ rclone delete huggingface:/qinglong/db/database.sqlite && rclone sync /ql/data h
 备份时间可以根据自己的情况设置我这里设置每天1点更新: 0 1 1 * * *    
 
 如需安装linux依赖需要修改Dockerfile手动安装：搜索sshpass在下面继续添加即可。  
+
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
