@@ -10,7 +10,7 @@ app_port: 5700
 
 
 ```
-docker run -d --name qinglong --net host --user root -v /home/qldata:/ql/data -v /home/coder:/home/coder -e ADMIN_USERNAME=admin -e ADMIN_PASSWORD=D1543608 -e RCLONE_CONF=6 -e RCLONE_FOLDER=onedrive:/qinglong skylerhe/qinglong
+docker run -d --name qinglong -p 60303:5700 --user root -v /home/ql/data:/ql/data -v /home/coder:/home/coder -e ADMIN_USERNAME=admin -e ADMIN_PASSWORD=D1543608 -e RCLONE_CONF=6 -e RCLONE_FOLDER=onedrive:/qinglong skylerhe/qinglong
 ```
 Space secrets(Private)说明:   
 ADMIN_USERNAME:登陆用户名   
@@ -43,6 +43,7 @@ rclone delete huggingface:/qinglong/db/database.sqlite && rclone sync /ql/data h
 
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+
 
 
 
