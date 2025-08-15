@@ -64,7 +64,7 @@ jobs:
 
       - name: 运行脚本
         run: |
-          python qinglong.py --token="${{ github.event.inputs.Token}}" --userid="${{ github.event.inputs.UserID}}" --admin="${{ github.event.inputs.Admin}}" --password="${{ github.event.inputs.Password}}" --image="${{ github.event.inputs.Image}}"--rclone_folder="${{ github.event.inputs.Rclone_folder}}"
+          python qinglong.py --token="${{ github.event.inputs.Token}}" --userid="${{ github.event.inputs.UserID}}" --admin="${{ github.event.inputs.Admin}}" --password="${{ github.event.inputs.Password}}" --image="${{ github.event.inputs.Image}}" --rclone_folder="${{ github.event.inputs.Rclone_folder}}"
    
       # - name: Delete workflow runs
       #   uses: Mattraks/delete-workflow-runs@v1.2.3
